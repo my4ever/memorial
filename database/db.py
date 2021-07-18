@@ -1,7 +1,7 @@
 import sqlite3
 import os
 
-from sqlite_tables import CREATE_TABLES
+from .sqlite_tables import CREATE_TABLES
 
 
 class MemorealDB():
@@ -9,7 +9,7 @@ class MemorealDB():
     def __init__(self):
 
         # connecting to DB
-        self.db = sqlite3.connect(os.path.join('', 'memoreal.db'))
+        self.db = sqlite3.connect(os.path.join('database', 'memoreal.db'))
         #  execution variable
         self.cursor =self.db.cursor()
         for table in CREATE_TABLES:
@@ -24,7 +24,7 @@ class MemorealDB():
 
 MemorealDB()
 
-db = sqlite3.connect('memoreal.db')
+db = sqlite3.connect('database/memoreal.db')
 cursor = db.cursor()
 
 def add_word_db(word):
@@ -63,23 +63,45 @@ def get_wordid_db(word):
 
 def add_into_current_list_db(word):
     """Adding word into current list."""
-    SQL = cursor.execute(
-        '''INSERT INTO current_list 
-           (word, db_id)
-           VALUES (?, ?)'''
-    )
-    VALUES = (word, get_wordid_db(word))
-    cursor.execute(SQL, VALUES)
+    print(word)
+    SQL = '''INSERT INTO current_list 
+           (word)
+           VALUES(?)'''
+    VALUES = word
+    cursor.execute(SQL, [VALUES])
     db.commit()
 
 def get_current_list():
     """Getting current list."""
-    current_words = cursor.execute(
+    current_words = [word[0] for word in cursor.execute(
         '''SELECT word FROM current_list'''
-    ).fetchall()
+    ).fetchall()]
     return current_words
 
-def clear_current():
+def get_current_word_db(word_id):
+    """Getting the word from current list."""
+    word = cursor.execute(
+          'SELECT word FROM current_list '
+          f'WHERE id="{word_id}"'
+    ).fetchone()[0]
+    return word
+
+def get_current_amount_db():
+    """Getting the amount of words in current list."""
+    amount = cursor.execute(
+        """SELECT id FROM current_list"""
+    ).fetchall()
+    return amount
+
+def get_current_wordid_db(word):
+    """Getting word id from database."""
+    id = cursor.execute(
+        'SELECT id FROM current_list '
+        f'WHERE word="{word}"'
+    ).fetchone()
+    return id
+
+def clear_current_db():
     cursor.execute(
         'DELETE FROM current_list'
     )
