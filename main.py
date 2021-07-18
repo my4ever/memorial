@@ -3,6 +3,7 @@ import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+import database.db as db
 from design import Ui_MainWindow
 
 app = QtWidgets.QApplication(sys.argv)
@@ -64,7 +65,7 @@ def create_new_list():
         count_of_words = 1
 
         # Удаляем прошлый список
-        erase = open("./Files/words.txt", 'w', encoding='cp1251')
+        erase = open("./collection_of_words/words.txt", 'w', encoding='cp1251')
         erase.close()
 
         # Создаем список всех имеющихся слов
@@ -84,7 +85,7 @@ def create_new_list():
             corrent_list.update(new)
             count_of_words += 1
             word = word + '\n'
-            with open('./Files/words.txt', 'a', encoding='cp1251') as file:
+            with open('./collection_of_words/words.txt', 'a', encoding='cp1251') as file:
                 file.write(word)
 
         # "Рендрим" окно
@@ -106,7 +107,7 @@ def add_words():
         # Объявляем переменные
         number_to_add = int(ui.text_add_words.text())
         lbl_main_settings('Уже в списке', 40, 10, 341, 51)
-        a_list = open("./Files/words.txt", 'r', encoding='cp1251')
+        a_list = open("./collection_of_words/words.txt", 'r', encoding='cp1251')
         number = 0
         corrent_count = len(corrent_list)
         add_list = []
@@ -138,7 +139,7 @@ def add_words():
                 corrent_count += 1
                 new = {corrent_count: word}
                 corrent_list.update(new)
-                with open('./Files/words.txt', 'a', encoding='cp1251') as file:
+                with open('./collection_of_words/words.txt', 'a', encoding='cp1251') as file:
                     word = word + '\n'
                     file.write(word)
             ui.list_corrent_and_add.addItem(str(f'{corrent_count}) {word}'))
