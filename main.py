@@ -70,7 +70,7 @@ def create_new_list():
 
     # Сообщаем пользовотелю что нужно вводить цифры
     except ValueError:
-        lbl_main_settings('Введите колличество слов', 1, 10, 341, 51)
+        lbl_main_settings('Введите число', 1, 10, 341, 51)
         ui.text_new_list.clear()
 
 
@@ -105,7 +105,7 @@ def add_words():
 
     # Сообщаем пользовотелю что нужно вводить цифры
     except ValueError:
-        lbl_main_settings('Введите колличество слов', 1, 10, 341, 51)
+        lbl_main_settings('Введите число', 1, 10, 341, 51)
         ui.text_add_words.clear()
 
 
