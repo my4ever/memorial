@@ -133,7 +133,7 @@ def checkup_question():
             ui.lbl_question.setText(f'  {number} - слово?')
             question = get_current_word_db(number)
 
-    # "Заход на павторный круг"
+    # "Заход на повторный круг"
     else:
         checkup_question()
 
@@ -188,7 +188,7 @@ def show_current_list():
     ui.bar_menu.hide()
     ui.bar_list.show()
     ui.btn_back_to_menu.show()
-    lbl_main_settings('Текущуй список', 100, 10, 250, 51)
+    lbl_main_settings('Текущий список', 100, 10, 250, 51)
 
 
 # Создаём фунцию возрата в меню
